@@ -26,6 +26,12 @@ const useStyles = createUseStyles({
   infoWindowName: {
     fontWeight: 'bold',
     marginBottom: 4,
+  },
+  latlngIcon: {
+    position: 'relative',
+    top: -2,
+    left: -1,
+    marginRight: 1
   }
 })
 
@@ -79,7 +85,12 @@ function Map ({
     // map.fitBounds(bounds)
   }
 
-  return isLoaded ? (
+  if (data) {
+    console.log('data is: ', data)
+  }
+
+
+  return isLoaded && data ? (
     <>
       <GoogleMap
         mapContainerClassName={classes.container}
@@ -89,40 +100,48 @@ function Map ({
         onUnmount={onUnmount}
       >
         <>
-        {data.objects.map(({ name, type, description, address, website, physical, online, lat, lng }, key) => (
-          <Marker
-            key={key}
-            position={{ lat, lng }}
-            onClick={() => handleActiveMarker(key)}
-          >
-            {activeMarker === key ? (
-              <InfoWindow
-                onCloseClick={() => setActiveMarker(null)}
-                options={{
-                  maxWidth: 400,
-                }}
-              >
-                <div className={classes.infoWindowContent}>
-                  <div className={classes.infoWindowName}>&copy; {name}</div>
-                  <div>&#8505; {type}</div>
-                  {physical && <div>&#8505; Физически магазин</div>}
-                  {online && <div>&#8505; Online търговец</div>}
-                  {description && <div>&#8505; {description}</div>}
-                  <div>
-                    &#64; {linkExt(website, truncate(website))}
+        {data.map(({ name, type, description, address, website, physical, online, coordinates, lat, lng}, key) => {
+          const isOffline = physical === 'yes'
+          const isOnline = online === 'yes'
+
+          return (
+            <Marker
+              key={key}
+              position={{ lat: Number(lat), lng: Number(lng) }}
+              onClick={() => handleActiveMarker(key)}
+            >
+              {activeMarker === key ? (
+                <InfoWindow
+                  onCloseClick={() => setActiveMarker(null)}
+                  options={{
+                    maxWidth: 400,
+                  }}
+                >
+                  <div className={classes.infoWindowContent}>
+                    <div className={classes.infoWindowName}>&copy; {name}</div>
+                    <div>&#8505; {type}</div>
+                    {isOffline && <div>&#9782; Физически магазин</div>}
+                    {description && <div>&#8505; {description}</div>}
+                    {isOnline && <div style={{paddingLeft: 1}}>&#8494; Online търговец</div>}
+                    <div>
+                    {/* &#8494;   &#64; */}
+                    &#8494;&nbsp;&nbsp;{linkExt(website, truncate(website))}
+                    </div>
+                    <div>&#9873;&nbsp; {address} ({linkExt(`https://www.google.com/maps/search/${address}/`, 'Google Maps')})</div>
+                    <div>
+                      <span className={classes.latlngIcon}>&#8982;</span>
+                      {coordinates} ({linkExt(`https://www.google.com/maps?ll=${coordinates}`, 'Google Maps')})</div>
                   </div>
-                  <div>&#9873;&nbsp; {address} ({linkExt(`https://www.google.com/maps/search/${address}/`, 'Google Maps')})</div>
-                  <div>&#8982; {lat}, {lng} ({linkExt(`https://www.google.com/maps?ll=${lat},${lng}`, 'Google Maps')})</div>
-                </div>
-              </InfoWindow>
-            ) : null}
-          </Marker>
-        ))}
+                </InfoWindow>
+              ) : null}
+            </Marker>
+          )
+        })}
         </>
       </GoogleMap>
     </>
   ) : (
-    <div>loading...</div>
+    <div>loading map...</div>
   )
 }
 
