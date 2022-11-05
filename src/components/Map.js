@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { GoogleMap, useJsApiLoader, InfoWindow, Marker } from '@react-google-maps/api'
+import {createUseStyles} from 'react-jss'
 
 function truncate (string, length = 50) {
   if (string.length <= length) {
@@ -13,11 +14,20 @@ function linkExt (url, label) {
   return <a href={url} target="_blank" rel="noopener noreferrer">{label}</a>
 }
 
-const containerStyle = {
-  width: '94%',
-  marginLeft: '3%',
-  height: '400px'
-};
+const useStyles = createUseStyles({
+  container: {
+    width: '94%',
+    marginLeft: '3%',
+    height: '400px'
+  },
+  infoWindowContent: {
+    lineHeight: '1.5em'
+  },
+  infoWindowName: {
+    fontWeight: 'bold',
+    marginBottom: 4,
+  }
+})
 
 const center = {
   lat: 42.672572,
@@ -26,15 +36,11 @@ const center = {
 
 const startZoom = 11;
 
-const divStyle = {
-  background: `white`,
-  border: `1px solid #ccc`,
-  padding: 15
-}
 
 function Map ({
   data
 }) {
+  const classes = useStyles()
   const [activeMarker, setActiveMarker] = useState(null);
   const [map, setMap] = useState(null)
 
@@ -76,7 +82,7 @@ function Map ({
   return isLoaded ? (
     <>
       <GoogleMap
-        mapContainerStyle={containerStyle}
+        mapContainerClassName={classes.container}
         center={center}
         zoom={startZoom}
         onLoad={onLoadGoogleMap}
@@ -96,13 +102,8 @@ function Map ({
                   maxWidth: 400,
                 }}
               >
-                <div style={{
-                  lineHeight: '1.5em'
-                }}>
-                  <div style={{
-                    fontWeight: 'bold',
-                    marginBottom: 4,
-                  }}>&copy; {name}</div>
+                <div className={classes.infoWindowContent}>
+                  <div className={classes.infoWindowName}>&copy; {name}</div>
                   <div>&#8505; {type}</div>
                   {physical && <div>&#8505; Физически магазин</div>}
                   {online && <div>&#8505; Online търговец</div>}
