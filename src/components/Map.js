@@ -43,9 +43,7 @@ const center = {
 const startZoom = 11;
 
 
-function Map ({
-  data
-}) {
+function Map ({ data }) {
   const classes = useStyles()
   const [activeMarker, setActiveMarker] = useState(null);
   const [map, setMap] = useState(null)
