@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/bitcoin-stores-bulgaria/static/css/main.e6c13ad2.css",
+    "main.js": "/bitcoin-stores-bulgaria/static/js/main.e71827ca.js",
+    "static/js/787.d4c1ec88.chunk.js": "/bitcoin-stores-bulgaria/static/js/787.d4c1ec88.chunk.js",
+    "index.html": "/bitcoin-stores-bulgaria/index.html",
+    "main.e6c13ad2.css.map": "/bitcoin-stores-bulgaria/static/css/main.e6c13ad2.css.map",
+    "main.e71827ca.js.map": "/bitcoin-stores-bulgaria/static/js/main.e71827ca.js.map",
+    "787.d4c1ec88.chunk.js.map": "/bitcoin-stores-bulgaria/static/js/787.d4c1ec88.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.e71827ca.js"
+  ]
+}
