@@ -1,6 +1,7 @@
 import './App.css'
 import LanguageSelector from './components/LanguageSelector'
 import TypesFilter from './components/TypesFilter'
+import MerchantsTable from './components/MerchantsTable'
 import Map from './components/Map'
 
 import React, { useState, useEffect } from 'react'
@@ -16,15 +17,25 @@ const App = () => {
     sheetsOptions: [{ id: 'list' }, { id: 'types'}],
   });
 
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredMerchants, setFilteredMerchants] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState(selectedTypesByDefault)
+  const [typesObj, setTypesObj] = useState({})
 
   useEffect(() => {
     console.log('data changed: ', data)
     if (data && data[0] && data[0].data) {
-      setFilteredData(data[0].data.filter((m) => selectedTypes.includes(m.typeidx)))
+      setFilteredMerchants(data[0].data.filter((m) => selectedTypes.includes(m.typeidx)))
     }
   }, [data, selectedTypes])
+
+  useEffect(() => {
+    if (data && data[1] && data[1].data) {
+      setTypesObj(data[1].data.reduce((acc, type) => {
+        acc[type.idx] = type[lang]
+        return acc
+      }, {}))
+    }
+  }, [data, lang])
 
   function handleTypesChange (e) {
     if (e.target.checked) {
@@ -49,13 +60,19 @@ const App = () => {
   return (
     <div>
       <LanguageSelector lang={lang} handleLangChange={handleLangChange} />
+      <Map lang={lang} data={filteredMerchants} allTypes={data[1].data} />
       <TypesFilter
         selectedTypes={selectedTypes}
         allTypes={data[1].data}
         lang={lang}
         handleTypesChange={handleTypesChange}
       />
-      <Map data={filteredData} />
+      <MerchantsTable
+        data={filteredMerchants}
+        allTypes={data[1].data}
+        typesObj={typesObj}
+        lang={lang}
+        />
     </div>
   )
 }

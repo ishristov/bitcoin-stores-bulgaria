@@ -1,18 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { GoogleMap, useJsApiLoader, InfoWindow, Marker } from '@react-google-maps/api'
 import {createUseStyles} from 'react-jss'
-
-function truncate (string, length = 50) {
-  if (string.length <= length) {
-    return string
-  }
-
-  return string.slice(0, length) + '...'
-}
-
-function linkExt (url, label) {
-  return <a href={url} target="_blank" rel="noopener noreferrer">{label}</a>
-}
+import { linkExt, truncate } from '../lib/utils'
 
 const useStyles = createUseStyles({
   container: {
@@ -43,7 +32,7 @@ const center = {
 const startZoom = 11;
 
 
-function Map ({ data }) {
+function Map ({ data, allTypes }) {
   const classes = useStyles()
   const [activeMarker, setActiveMarker] = useState(null);
   const [map, setMap] = useState(null)
@@ -83,8 +72,8 @@ function Map ({ data }) {
     // map.fitBounds(bounds)
   }
 
-  if (data) {
-    console.log('data is: ', data)
+  if (allTypes) {
+    console.log('all types: ', allTypes)
   }
 
 
