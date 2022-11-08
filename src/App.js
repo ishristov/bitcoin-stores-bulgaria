@@ -21,6 +21,13 @@ const useStyles = createUseStyles({
     padding: '20px 40px',
     marginTop: 20,
     backgroundColor:' white',
+  },
+  genericLoadingContainer: {
+    marginTop: 20,
+    textAlign: 'center',
+  },
+  mapContainer: {
+    height: 400,
   }
 })
 
@@ -69,12 +76,8 @@ const App = () => {
     i18n.changeLanguage(e.target.value)
   }
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
-  if (error) {
-    return <div>Map loading failed. Try again later or contact the site admin.</div>
+  if (!data || !data[0] || !data[0].data) {
+    return <div className={classes.genericLoadingContainer}>Loading...</div>
   }
 
   return (
@@ -86,7 +89,13 @@ const App = () => {
         lang={lang}
         handleTypesChange={handleTypesChange}
       />
-      <Map lang={lang} data={filteredMerchants} allTypes={data[1].data} typesObj={typesObj} />
+
+      {
+        loading ?
+        <div className={classes.mapContainer}>Loading...</div> : error ?
+        <div className={classes.mapContainer}>Map loading failed. Try again later or contact the site admin.</div> :
+        <Map lang={lang} data={filteredMerchants} allTypes={data[1].data} typesObj={typesObj} />
+      }
 
       <TableMerchantsOnlyOnline
         data={filteredMerchants.filter(m => isOnlineOnly(m)).sort((a,b) => sortBy(a,b, 'name'))}
