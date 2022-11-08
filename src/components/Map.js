@@ -5,8 +5,7 @@ import { linkExt, truncate } from '../lib/utils'
 
 const useStyles = createUseStyles({
   container: {
-    width: '94%',
-    marginLeft: '3%',
+    marginTop: 20,
     height: '400px'
   },
   infoWindowContent: {
@@ -71,11 +70,6 @@ function Map ({ data, allTypes }) {
     // markers.forEach(({ position }) => bounds.extend(position))
     // map.fitBounds(bounds)
   }
-
-  if (allTypes) {
-    console.log('all types: ', allTypes)
-  }
-
 
   return isLoaded && data ? (
     <>

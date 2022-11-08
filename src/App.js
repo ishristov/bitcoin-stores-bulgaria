@@ -1,16 +1,26 @@
-import './App.css'
 import LanguageSelector from './components/LanguageSelector'
 import TypesFilter from './components/TypesFilter'
 import MerchantsTable from './components/MerchantsTable'
 import Map from './components/Map'
+import { createUseStyles } from 'react-jss'
 
 import React, { useState, useEffect } from 'react'
 import useGoogleSheets from 'use-google-sheets'
 
 const selectedTypesByDefault = ['3','4','5','6','7','8']
 
+const useStyles = createUseStyles({
+  main: {
+    maxWidth: 1200,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: '20px 40px',
+  }
+})
+
 const App = () => {
   const [lang, setLang] = useState('bg')
+  const classes = useStyles()
   const { data, loading, error } = useGoogleSheets({
     apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID,
@@ -58,15 +68,15 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className={classes.main}>
       <LanguageSelector lang={lang} handleLangChange={handleLangChange} />
-      <Map lang={lang} data={filteredMerchants} allTypes={data[1].data} />
       <TypesFilter
         selectedTypes={selectedTypes}
         allTypes={data[1].data}
         lang={lang}
         handleTypesChange={handleTypesChange}
       />
+      <Map lang={lang} data={filteredMerchants} allTypes={data[1].data} />
       <MerchantsTable
         data={filteredMerchants}
         allTypes={data[1].data}
