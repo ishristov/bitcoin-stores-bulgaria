@@ -2,7 +2,6 @@
   "name": "bitcoin-stores-bulgaria",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ishristov.github.io/bitcoin-stores-bulgaria",
   "dependencies": {
     "@react-google-maps/api": "^2.13.1",
     "@testing-library/jest-dom": "^5.16.5",

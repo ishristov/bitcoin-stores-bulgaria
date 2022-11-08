@@ -1,6 +1,8 @@
 import React from 'react'
 import {createUseStyles} from 'react-jss'
 import { linkExt } from '../lib/utils'
+import shopOffline from '../images/shop-offline.png'
+import shopOnline from '../images/shop-online.png'
 
 const useStyles = createUseStyles({
   table: {
@@ -52,9 +54,9 @@ const MerchantsTable = ({data, typesObj}) => {
                 </td>
                 {/* <td><img width="18" src={`images/type-${typeidx}.png`} /> {typesObj[typeidx]}</td> */}
                 <td className={classes.nowrap}>
-                  {isOffline && <img width="18" alt="offline" src="images/shop-offline.png"
+                  {isOffline && <img width="18" alt="offline" src={shopOffline}
                     className={classes.storeIcon} />}
-                  {isOnline && <img width="18" alt="online" src="images/shop-online.png"
+                  {isOnline && <img width="18" alt="online" src={shopOnline}
                     className={[classes.storeIcon, classes.storeOnline].join(' ')} />}
                 </td>
                 <td>{description}</td>
