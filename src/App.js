@@ -22,10 +22,6 @@ const useStyles = createUseStyles({
     marginTop: 20,
     backgroundColor:' white',
   },
-  genericLoadingContainer: {
-    marginTop: 20,
-    textAlign: 'center',
-  },
   mapContainer: {
     height: 400,
   }
@@ -44,11 +40,10 @@ const App = () => {
   const [selectedTypes, setSelectedTypes] = useState(selectedTypesByDefault)
   const [typesObj, setTypesObj] = useState({})
 
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslation()
 
   // When some merchant type checkbox is (de)selected, filter the merchants list
   useEffect(() => {
-    console.log('data changed: ', data)
     if (data && data[0] && data[0].data) {
       setFilteredMerchants(data[0].data.filter((m) => selectedTypes.includes(m.typeidx)))
     }
@@ -76,8 +71,12 @@ const App = () => {
     i18n.changeLanguage(e.target.value)
   }
 
+  if (error) {
+    return <div className={classes.main}>Data loading failed. Try again later or contact the site admin.</div>
+  }
+
   if (!data || !data[0] || !data[0].data) {
-    return <div className={classes.genericLoadingContainer}>Loading...</div>
+    return <div className={classes.main}>Loading data...</div>
   }
 
   return (
@@ -92,8 +91,7 @@ const App = () => {
 
       {
         loading ?
-        <div className={classes.mapContainer}>Loading...</div> : error ?
-        <div className={classes.mapContainer}>Map loading failed. Try again later or contact the site admin.</div> :
+        <div className={classes.mapContainer}>Loading...</div> :
         <Map lang={lang} data={filteredMerchants} allTypes={data[1].data} typesObj={typesObj} />
       }
 
