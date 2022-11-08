@@ -1,8 +1,10 @@
 import LanguageSelector from './components/LanguageSelector'
 import TypesFilter from './components/TypesFilter'
-import MerchantsTable from './components/MerchantsTable'
+import TableMerchants from './components/TableMerchants'
+import TableMerchantsOnlyOnline from './components/TableMerchantsOnlyOnline'
 import Map from './components/Map'
 import { createUseStyles } from 'react-jss'
+import { isOnlineOnly, sortBy } from './lib/utils'
 
 import React, { useState, useEffect } from 'react'
 import useGoogleSheets from 'use-google-sheets'
@@ -77,12 +79,20 @@ const App = () => {
         handleTypesChange={handleTypesChange}
       />
       <Map lang={lang} data={filteredMerchants} allTypes={data[1].data} />
-      <MerchantsTable
-        data={filteredMerchants}
+
+      <TableMerchantsOnlyOnline
+        data={filteredMerchants.filter(m => isOnlineOnly(m)).sort((a,b) => sortBy(a,b, 'name'))}
         allTypes={data[1].data}
         typesObj={typesObj}
         lang={lang}
-        />
+      />
+
+      <TableMerchants
+        data={filteredMerchants.filter(m => !isOnlineOnly(m)).sort((a,b) => sortBy(a,b, 'name'))}
+        allTypes={data[1].data}
+        typesObj={typesObj}
+        lang={lang}
+      />
     </div>
   )
 }

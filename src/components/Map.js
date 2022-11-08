@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState } from 'react'
 import { GoogleMap, useJsApiLoader, InfoWindow, Marker } from '@react-google-maps/api'
 import {createUseStyles} from 'react-jss'
-import { linkExt, truncate } from '../lib/utils'
+import { linkExt, truncate, isOnline, isOffline } from '../lib/utils'
 
 const useStyles = createUseStyles({
   container: {
@@ -34,16 +34,12 @@ const startZoom = 11;
 function Map ({ data, allTypes }) {
   const classes = useStyles()
   const [activeMarker, setActiveMarker] = useState(null);
-  const [map, setMap] = useState(null)
+  // const [map, setMap] = useState(null)
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyDNjOOCByF4SF8zsCxv4h8tS1i5qA2IQsA"
   })
-
-  useEffect(() => {
-  
-  }, [])
 
   // const onLoad = useCallback(function callback(map) {
   //   const bounds = new window.google.maps.LatLngBounds(center);
@@ -54,9 +50,9 @@ function Map ({ data, allTypes }) {
   // }, [])
 
 
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null)
-  }, [])
+  // const onUnmount = useCallback(function callback(map) {
+  //   setMap(null)
+  // }, [])
 
   const handleActiveMarker = (marker) => {
     if (marker === activeMarker) {
@@ -65,11 +61,11 @@ function Map ({ data, allTypes }) {
     setActiveMarker(marker)
   }
 
-  const onLoadGoogleMap = (map) => {
-    // const bounds = new google.maps.LatLngBounds()
-    // markers.forEach(({ position }) => bounds.extend(position))
-    // map.fitBounds(bounds)
-  }
+  // const onLoadGoogleMap = (map) => {
+  //   // const bounds = new google.maps.LatLngBounds()
+  //   // markers.forEach(({ position }) => bounds.extend(position))
+  //   // map.fitBounds(bounds)
+  // }
 
   return isLoaded && data ? (
     <>
@@ -77,13 +73,12 @@ function Map ({ data, allTypes }) {
         mapContainerClassName={classes.container}
         center={center}
         zoom={startZoom}
-        onLoad={onLoadGoogleMap}
-        onUnmount={onUnmount}
+        // onLoad={onLoadGoogleMap}
+        // onUnmount={onUnmount}
       >
         <>
-        {data.map(({ name, type, description, address, website, physical, online, coordinates, lat, lng}, key) => {
-          const isOffline = physical === 'yes'
-          const isOnline = online === 'yes'
+        {data.map((m, key) => {
+          const { name, type, description, address, website, coordinates, lat, lng} = m
 
           return (
             <Marker
@@ -101,9 +96,9 @@ function Map ({ data, allTypes }) {
                   <div className={classes.infoWindowContent}>
                     <div className={classes.infoWindowName}>&copy; {name}</div>
                     <div>&#8505; {type}</div>
-                    {isOffline && <div>&#9782; Физически магазин</div>}
+                    {isOffline(m) && <div>&#9782; Физически обект</div>}
                     {description && <div>&#8505; {description}</div>}
-                    {isOnline && <div style={{paddingLeft: 1}}>&#8494; Online търговец</div>}
+                    {isOnline(m) && <div style={{paddingLeft: 1}}>&#8494; Online обект</div>}
                     <div>
                     {/* &#8494;   &#64; */}
                     &#8494;&nbsp;&nbsp;{linkExt(website, truncate(website))}
