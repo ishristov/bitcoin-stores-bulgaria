@@ -72,7 +72,7 @@ const App = () => {
   }
 
   if (error) {
-    return <div>Map loading failed. Try again and enter a comment below with the problem.</div>
+    return <div>Map loading failed. Try again later or contact the site admin.</div>
   }
 
   return (
