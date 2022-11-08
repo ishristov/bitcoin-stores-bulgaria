@@ -20,6 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "wpbuild": "react-scripts build && cp -a build/. ../btcpay.bg/wp-content/reactpress/apps/bitcoin-stores-bulgaria/build/",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
