@@ -19,6 +19,8 @@ const useStyles = createUseStyles({
     marginLeft: 'auto',
     marginRight: 'auto',
     padding: '20px 40px',
+    marginTop: 20,
+    backgroundColor:' white',
   }
 })
 

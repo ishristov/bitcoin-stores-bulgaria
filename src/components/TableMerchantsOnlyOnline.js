@@ -7,7 +7,9 @@ import { linkExt } from '../lib/utils'
 import shopOnline from '../images/shop-online2.png'
 
 const useStyles = createUseStyles({
-
+  container: {
+    marginTop: '2rem',
+  }
 })
 
 const TableMerchantsOnlyOnline = ({data}) => {
@@ -15,7 +17,7 @@ const TableMerchantsOnlyOnline = ({data}) => {
   const { t } = useTranslation()
 
   return (
-    <div>
+    <div className={classes.container}>
       <h2>
         <img height="20" alt="online" src={shopOnline} />&nbsp;
         {t('noAddressTitle')}

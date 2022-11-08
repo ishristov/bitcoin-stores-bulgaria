@@ -8,6 +8,9 @@ import shopOffline from '../images/shop-offline.png'
 import shopOnline from '../images/shop-online2.png'
 
 const useStyles = createUseStyles({
+  container: {
+    marginTop: '2rem',
+  },
   storeIcon: {
     '& + &': {
       display: 'inline-block',
@@ -29,12 +32,12 @@ const useStyles = createUseStyles({
   }
 })
 
-const TableMerchants = ({data, typesObj}) => {
+const TableMerchants = ({data}) => {
   const classes = useStyles()
   const { t } = useTranslation()
 
   return (
-    <div>
+    <div className={classes.container}>
       <h2>
         <img height="20" alt="offline" src={shopOffline} />&nbsp;
         {t('withAddressTitle')}
