@@ -6,7 +6,7 @@ const useStyles = createUseStyles({
   main: {
     marginTop: 20,
     borderColor: '#f6f6f6',
-  }
+  },
 })
 
 const TypesFilter = ({selectedTypes, allTypes, lang, handleTypesChange}) => {
@@ -23,7 +23,7 @@ const TypesFilter = ({selectedTypes, allTypes, lang, handleTypesChange}) => {
             value={type.idx}
             onChange={handleTypesChange}
             checked={selectedTypes.includes(type.idx)}
-          />
+          />&nbsp;
           {type[lang]}
         </label>
       ))}   

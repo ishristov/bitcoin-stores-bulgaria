@@ -38,11 +38,11 @@ const TableMerchants = ({data}) => {
 
   return (
     <div className={classes.container}>
-      <h2>
+      <h3>
         <img height="20" alt="offline" src={shopOffline} />&nbsp;
         {t('withAddressTitle')}
-      </h2>
-      <h3>{t('withAddressSub')}</h3>
+      </h3>
+      <h4>{t('withAddressSub')}</h4>
       <table className={classes.table}>
         <thead>
           <tr>

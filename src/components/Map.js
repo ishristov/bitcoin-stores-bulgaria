@@ -27,10 +27,10 @@ const useStyles = createUseStyles({
 
 const center = {
   lat: 42.672572,
-  lng: 23.295803
+  lng: 25.295803
 };
 
-const startZoom = 11;
+const startZoom = 7;
 
 
 function Map ({ data, typesObj }) {

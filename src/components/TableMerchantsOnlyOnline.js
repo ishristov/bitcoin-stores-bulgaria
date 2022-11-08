@@ -18,11 +18,11 @@ const TableMerchantsOnlyOnline = ({data}) => {
 
   return (
     <div className={classes.container}>
-      <h2>
+      <h3>
         <img height="20" alt="online" src={shopOnline} />&nbsp;
         {t('noAddressTitle')}
-      </h2>
-      <h3>{t('noAddressSub')}</h3>
+      </h3>
+      <h4>{t('noAddressSub')}</h4>
       <table className={classes.table}>
         <thead>
           <tr>
