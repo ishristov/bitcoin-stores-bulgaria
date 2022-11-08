@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { GoogleMap, useJsApiLoader, InfoWindow, Marker } from '@react-google-maps/api'
 import {createUseStyles} from 'react-jss'
+
 import { linkExt, truncate, isOnline, isOffline } from '../lib/utils'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = createUseStyles({
   container: {
@@ -31,9 +33,10 @@ const center = {
 const startZoom = 11;
 
 
-function Map ({ data, allTypes }) {
+function Map ({ data, typesObj }) {
   const classes = useStyles()
-  const [activeMarker, setActiveMarker] = useState(null);
+  const [activeMarker, setActiveMarker] = useState(null)
+  const { t } = useTranslation()
   // const [map, setMap] = useState(null)
 
   const { isLoaded } = useJsApiLoader({
@@ -78,7 +81,7 @@ function Map ({ data, allTypes }) {
       >
         <>
         {data.map((m, key) => {
-          const { name, type, description, address, website, coordinates, lat, lng} = m
+          const { name, typeidx, description, address, website, coordinates, lat, lng} = m
 
           return (
             <Marker
@@ -95,10 +98,10 @@ function Map ({ data, allTypes }) {
                 >
                   <div className={classes.infoWindowContent}>
                     <div className={classes.infoWindowName}>&copy; {name}</div>
-                    <div>&#8505; {type}</div>
-                    {isOffline(m) && <div>&#9782; Физически обект</div>}
+                    <div>&#8505; {typesObj[typeidx]}</div>
+                    {isOffline(m) && <div>&#9782; {t('off')}</div>}
                     {description && <div>&#8505; {description}</div>}
-                    {isOnline(m) && <div style={{paddingLeft: 1}}>&#8494; Online обект</div>}
+                    {isOnline(m) && <div style={{paddingLeft: 1}}>&#8494; {t('on')}</div>}
                     <div>
                     {/* &#8494;   &#64; */}
                     &#8494;&nbsp;&nbsp;{linkExt(website, truncate(website))}

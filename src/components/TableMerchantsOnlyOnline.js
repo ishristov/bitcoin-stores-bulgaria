@@ -1,6 +1,8 @@
 import React from 'react'
-import './Table.css'
 import {createUseStyles} from 'react-jss'
+import { useTranslation } from 'react-i18next'
+
+import './Table.css'
 import { linkExt } from '../lib/utils'
 import shopOnline from '../images/shop-online2.png'
 
@@ -8,21 +10,24 @@ const useStyles = createUseStyles({
 
 })
 
-const TableMerchantsOnlyOnline = ({data, typesObj}) => {
+const TableMerchantsOnlyOnline = ({data}) => {
   const classes = useStyles()
+  const { t } = useTranslation()
 
   return (
     <div>
       <h2>
         <img height="20" alt="online" src={shopOnline} />&nbsp;
-        Oнлайн магазини и обекти без физически адрес
+        {t('noAddressTitle')}
       </h2>
-      <h3>Заради липсата на адрес, тези обекти не могат да бъдат показани на картата.</h3>
+      <h3>{t('noAddressSub')}</h3>
       <table className={classes.table}>
-        <tr>
-          <th>Име</th>
-          <th>Описание</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>{t('name')}</th>
+            <th>{t('desc')}</th>
+          </tr>
+        </thead>
         <tbody>
           {data.map(({ name, description, website }, key) => {
             return (

@@ -1,6 +1,8 @@
 import React from 'react'
-import './Table.css'
 import {createUseStyles} from 'react-jss'
+import { useTranslation } from 'react-i18next'
+
+import './Table.css'
 import { linkExt, isOnline, isOffline } from '../lib/utils'
 import shopOffline from '../images/shop-offline.png'
 import shopOnline from '../images/shop-online2.png'
@@ -29,21 +31,24 @@ const useStyles = createUseStyles({
 
 const TableMerchants = ({data, typesObj}) => {
   const classes = useStyles()
+  const { t } = useTranslation()
 
   return (
     <div>
       <h2>
         <img height="20" alt="offline" src={shopOffline} />&nbsp;
-        Магазини, ресторанти и обекти с физически адрес
+        {t('withAddressTitle')}
       </h2>
-      <h3>Тези обекти могат да бъдат намерени и на картата по-горе.</h3>
+      <h3>{t('withAddressSub')}</h3>
       <table className={classes.table}>
-        <tr>
-          <th>Име на обекта</th>
-          <th className="">Физически<br/>или онлайн</th>
-          <th>Описание</th>
-          <th>Адрес</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>{t('name')}</th>
+            <th className="">{t('onoff')}</th>
+            <th>{t('desc')}</th>
+            <th>{t('address')}</th>
+          </tr>
+        </thead>
       <tbody>
         {data.map((m, key) => {
             const { name, description, address, website, coordinates} = m

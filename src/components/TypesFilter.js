@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = createUseStyles({
   main: {
@@ -10,10 +11,11 @@ const useStyles = createUseStyles({
 
 const TypesFilter = ({selectedTypes, allTypes, lang, handleTypesChange}) => {
   const classes = useStyles()
+  const { t } = useTranslation()
 
   return (
     <fieldset className={classes.main}>      
-      <legend>Merchant types</legend>
+      <legend>{t('merchantTypes')}</legend>
       {allTypes.map((type) => (
         <label key={type.idx} style={{display: 'block'}}>
           <input

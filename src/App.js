@@ -1,13 +1,15 @@
+import React, { useState, useEffect } from 'react'
+import useGoogleSheets from 'use-google-sheets'
+import { createUseStyles } from 'react-jss'
+import { useTranslation } from 'react-i18next'
+
 import LanguageSelector from './components/LanguageSelector'
 import TypesFilter from './components/TypesFilter'
 import TableMerchants from './components/TableMerchants'
 import TableMerchantsOnlyOnline from './components/TableMerchantsOnlyOnline'
 import Map from './components/Map'
-import { createUseStyles } from 'react-jss'
 import { isOnlineOnly, sortBy } from './lib/utils'
-
-import React, { useState, useEffect } from 'react'
-import useGoogleSheets from 'use-google-sheets'
+import './i18n'
 
 const selectedTypesByDefault = ['3','4','5','6','7','8']
 
@@ -33,6 +35,9 @@ const App = () => {
   const [selectedTypes, setSelectedTypes] = useState(selectedTypesByDefault)
   const [typesObj, setTypesObj] = useState({})
 
+  const { i18n } = useTranslation();
+
+  // When some merchant type checkbox is (de)selected, filter the merchants list
   useEffect(() => {
     console.log('data changed: ', data)
     if (data && data[0] && data[0].data) {
@@ -59,6 +64,7 @@ const App = () => {
 
   function handleLangChange (e) {
     setLang(e.target.value)
+    i18n.changeLanguage(e.target.value)
   }
 
   if (loading) {
@@ -78,20 +84,18 @@ const App = () => {
         lang={lang}
         handleTypesChange={handleTypesChange}
       />
-      <Map lang={lang} data={filteredMerchants} allTypes={data[1].data} />
+      <Map lang={lang} data={filteredMerchants} allTypes={data[1].data} typesObj={typesObj} />
 
       <TableMerchantsOnlyOnline
         data={filteredMerchants.filter(m => isOnlineOnly(m)).sort((a,b) => sortBy(a,b, 'name'))}
         allTypes={data[1].data}
         typesObj={typesObj}
-        lang={lang}
       />
 
       <TableMerchants
         data={filteredMerchants.filter(m => !isOnlineOnly(m)).sort((a,b) => sortBy(a,b, 'name'))}
         allTypes={data[1].data}
         typesObj={typesObj}
-        lang={lang}
       />
     </div>
   )
