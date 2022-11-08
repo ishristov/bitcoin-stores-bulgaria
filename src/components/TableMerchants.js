@@ -2,7 +2,7 @@ import React from 'react'
 import {createUseStyles} from 'react-jss'
 import { useTranslation } from 'react-i18next'
 
-import './Table.css'
+import { tableStyles } from './tableStyles'
 import { linkExt, isOnline, isOffline } from '../lib/utils'
 import shopOffline from '../images/shop-offline.png'
 import shopOnline from '../images/shop-online2.png'
@@ -12,9 +12,11 @@ const useStyles = createUseStyles({
     marginTop: '2rem',
   },
   storeIcon: {
+    height: 22,
+
     '& + &': {
       display: 'inline-block',
-      marginLeft: 6
+      marginLeft: 6,
     }
   },
   storeOnline: {
@@ -29,7 +31,8 @@ const useStyles = createUseStyles({
     top: -1,
     left: -1,
     marginLeft: 1
-  }
+  },
+  table: tableStyles
 })
 
 const TableMerchants = ({data}) => {
@@ -39,7 +42,7 @@ const TableMerchants = ({data}) => {
   return (
     <div className={classes.container}>
       <h3>
-        <img height="20" alt="offline" src={shopOffline} />&nbsp;
+        <img className={classes.storeIcon} alt="offline" src={shopOffline} />&nbsp;
         {t('withAddressTitle')}
       </h3>
       <h4>{t('withAddressSub')}</h4>
@@ -61,10 +64,10 @@ const TableMerchants = ({data}) => {
                 <td>
                   {linkExt(website, name)}
                 </td>
-                <td className={["", classes.nowrap].join(' ')}>
-                  {isOffline(m) && <img height="20" alt="offline" src={shopOffline}
+                <td className={["center", classes.nowrap].join(' ')}>
+                  {isOffline(m) && <img alt="offline" src={shopOffline}
                     className={classes.storeIcon} />}
-                  {isOnline(m) && <img height="20" alt="online" src={shopOnline}
+                  {isOnline(m) && <img alt="online" src={shopOnline}
                     className={[classes.storeIcon, classes.storeOnline].join(' ')} />}
                 </td>
                 <td>{description}</td>

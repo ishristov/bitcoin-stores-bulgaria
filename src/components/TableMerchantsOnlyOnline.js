@@ -2,14 +2,15 @@ import React from 'react'
 import {createUseStyles} from 'react-jss'
 import { useTranslation } from 'react-i18next'
 
-import './Table.css'
+import { tableStyles } from './tableStyles'
 import { linkExt } from '../lib/utils'
 import shopOnline from '../images/shop-online2.png'
 
 const useStyles = createUseStyles({
   container: {
     marginTop: '2rem',
-  }
+  },
+  table: tableStyles
 })
 
 const TableMerchantsOnlyOnline = ({data}) => {
@@ -19,7 +20,7 @@ const TableMerchantsOnlyOnline = ({data}) => {
   return (
     <div className={classes.container}>
       <h3>
-        <img height="20" alt="online" src={shopOnline} />&nbsp;
+        <img className={classes.storeIcon} alt="online" src={shopOnline} />&nbsp;
         {t('noAddressTitle')}
       </h3>
       <h4>{t('noAddressSub')}</h4>
