@@ -7,11 +7,10 @@ const useStyles = createUseStyles({
     marginTop: 20,
     border: '2px groove #f6f6f6',
     padding: '0.35em 0.65em',
-    lineHeight: '0.25em',
+    lineHeight: 1.33,
   },
   legend: {
     margin: 0,
-    padding: 2,
   }
 })
 
@@ -21,7 +20,7 @@ const TypesFilter = ({selectedTypes, allTypes, lang, handleTypesChange}) => {
 
   return (
     <fieldset className={classes.fieldset}>
-      <legend>{t('merchantTypes')}</legend>
+      <legend className={classes.legend}>{t('merchantTypes')}</legend>
       {allTypes.map((type) => (
         <label key={type.idx} style={{display: 'block'}}>
           <input

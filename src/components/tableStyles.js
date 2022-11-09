@@ -1,6 +1,6 @@
 export const tableStyles = {
   marginTop: 20,
-  fontSize: 12,
+  fontSize: 14,
   borderCollapse: 'collapse',
   borderSpacing: 0,
   width: '100%',
