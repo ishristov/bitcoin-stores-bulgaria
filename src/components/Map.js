@@ -81,7 +81,7 @@ function Map ({ data, typesObj }) {
       >
         <>
         {data.map((m, key) => {
-          const { name, typeidx, description, address, website, coordinates, lat, lng} = m
+          const { name, typeidx, description, address, website, coordinates, lat, lng, mapslink } = m
 
           return (
             <Marker
@@ -109,7 +109,7 @@ function Map ({ data, typesObj }) {
                     <div>&#9873;&nbsp; {address} ({linkExt(`https://www.google.com/maps/search/${address}/`, 'Google Maps')})</div>
                     <div>
                       <span className={classes.latlngIcon}>&#8982;</span>
-                      {coordinates} ({linkExt(`https://www.google.com/maps?ll=${coordinates}`, 'Google Maps')})</div>
+                      {coordinates} ({linkExt(mapslink || `https://www.google.com/maps?ll=${coordinates}`, 'Google Maps')})</div>
                   </div>
                 </InfoWindow>
               ) : null}
