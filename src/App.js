@@ -106,6 +106,8 @@ const App = () => {
         allTypes={data[1].data}
         typesObj={typesObj}
       />
+
+      <p></p>
     </div>
   )
 }
